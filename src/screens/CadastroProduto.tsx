@@ -3,6 +3,7 @@ import { Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View }
 import axios from 'axios';
 import ImagePicker, { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Footer from '../components/Footer';
+import { useNavigation } from '@react-navigation/native';
 
 
 const CadastroProduto: React.FC = () => {
@@ -12,6 +13,8 @@ const CadastroProduto: React.FC = () => {
     const [ingredientes, setIngredientes] = useState<string>('');
     const [imagem, setImagem] = useState<any>('');
     const [loading, setLoading] = useState(false);
+
+    const navigation = useNavigation(); 
 
     const cadastrarProduto = async () => {
         try {
@@ -139,7 +142,7 @@ const CadastroProduto: React.FC = () => {
                 <TouchableOpacity style={styles.imageButton} onPress={abrirCamera}>
                     <Text style={styles.imageButtonText}>Tirar Foto</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={cadastrarProduto}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
                     <Text style={styles.buttonText}>Cadastrar Produto</Text>
                 </TouchableOpacity>
             </View>
