@@ -16,7 +16,7 @@ async function listarProdutos(): Promise<Produto[]> {
 
 function PesquisaProdutos(): React.JSX.Element {
 
-    const [produtos, setProdutos] = useState<Produto[]>();
+    const [produtos, setProdutos] = useState<Produto[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +29,6 @@ function PesquisaProdutos(): React.JSX.Element {
         };
         fetchData();
     }, []);
-
 
     const renderItem = ({ item }: { item: Produto }) => {
         // Formata o preço usando Intl.NumberFormat
@@ -52,7 +51,7 @@ function PesquisaProdutos(): React.JSX.Element {
 
     return (
         <View style={styles.container}>
-          <StatusBar backgroundColor="red" barStyle="light-content" />
+            <StatusBar backgroundColor="red" barStyle="light-content" />
             <Head />
             <FlatList
                 showsVerticalScrollIndicator={false}
@@ -61,7 +60,6 @@ function PesquisaProdutos(): React.JSX.Element {
                 keyExtractor={(item) => item.id ? item.id.toString() : Math.random().toString()}
                 contentContainerStyle={styles.menuList}
             />
-
             <Footer />
         </View>
     );
@@ -70,16 +68,6 @@ function PesquisaProdutos(): React.JSX.Element {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    header: {
-        backgroundColor: 'red',
-        paddingVertical: 10,
-        alignItems: 'center',
-    },
-    headerText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'white',
     },
     menuItem: {
         flexDirection: 'row',
@@ -114,18 +102,6 @@ const styles = StyleSheet.create({
     },
     menuList: {
         flexGrow: 1,
-    },
-    footer: {
-        borderTopWidth: 0.2,
-        backgroundColor: 'white',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        paddingVertical: 10,
-    },
-    footerIcon: {
-        width: 30,
-        height: 30,
     },
 });
 
