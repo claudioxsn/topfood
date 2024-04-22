@@ -3,10 +3,11 @@ import { FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } 
 import axios from 'axios';
 import Footer from '../components/Footer';
 import Head from '../components/Header';
+import { useNavigation } from '@react-navigation/native';
 
 async function listarProdutos(): Promise<Produto[]> {
     try {
-        const response = await axios.get<Produto[]>('http://192.168.1.23:8000/api/produtos');
+        const response = await axios.get<Produto[]>('http://10.137.3.65:8000/api/produtos');
         return response.data;
     } catch (error) {
         console.log(error);
@@ -16,7 +17,13 @@ async function listarProdutos(): Promise<Produto[]> {
 
 function PesquisaProdutos(): React.JSX.Element {
 
+    const navigation = useNavigation();
+
     const [produtos, setProdutos] = useState<Produto[]>([]);
+
+    const selecionarProduto = (produto: Produto) => {
+        navigation.navigate('EditarProduto', { produto });
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,8 +45,8 @@ function PesquisaProdutos(): React.JSX.Element {
         }).format(item.preco);
 
         return (
-            <TouchableOpacity style={styles.menuItem}>
-                <Image source={ item.imagem ? { uri: item.imagem } : require('../assets/images/hamburger.png') } style={styles.image} />
+            <TouchableOpacity style={styles.menuItem} onPress={() => selecionarProduto(item)}>
+                <Image source={item.imagem ? { uri: item.imagem } : require('../assets/images/hamburger.png')} style={styles.image} />
                 <View style={styles.itemDetails}>
                     <Text style={styles.name}>{item.nome}</Text>
                     <Text style={styles.description}>{item.ingredientes}</Text>
